@@ -39,16 +39,22 @@ module spaghetti_L(
     length,
     hole_width,
     border_width,
-    thickness
+    thickness,
+    epsilon
 ){
-    width = hole_width + 2*border_width;
-    cube([length, border_width, thickness]);
+    width = hole_width + 2*border_width - epsilon;
+    thickness_eps = thickness - epsilon;
+    border_width_eps = border_width - epsilon;
+    // long leg
+    cube([length, border_width_eps, thickness_eps]);
+    // top connection
     translate([length-border_width, 0, 0])
-        cube([border_width, width, thickness]);
-    translate([length-2*border_width, width-border_width, 0])
-        cube([border_width, border_width, thickness]);
+        cube([border_width, width, thickness_eps]);
+    // short leg
+    translate([length-2*border_width, width-border_width_eps, 0])
+        cube([border_width, border_width_eps, thickness_eps]);
 };
 
 translate([0, 40, 0])
     spaghetti_U(50, 20, 5, 2, [10, 2.5], [0.5,0.25]);
-spaghetti_L(50, 20, 5, 2);
+spaghetti_L(50, 20, 5, 2, 0.2);
