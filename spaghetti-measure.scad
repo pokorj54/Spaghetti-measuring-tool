@@ -17,7 +17,7 @@ module spaghetti_U(
     // right wall
     translate([0,-thickness,0])
         difference(){
-            cube([length, thickness, 2*thickness]);
+            cube([length, thickness,    2*thickness]);
             //cuts
             for(cut = [0:len(cut_offsets)-1])
             for(i=[(border_width/cut_offsets[cut])+1: length/cut_offsets[cut]])
@@ -43,18 +43,17 @@ module spaghetti_L(
     epsilon
 ){
     width = hole_width + 2*border_width - epsilon;
-    thickness_eps = thickness - epsilon;
     border_width_eps = border_width - epsilon;
     // long leg
-    cube([length, border_width_eps, thickness_eps]);
+    cube([length, border_width_eps, thickness]);
     // top connection
     translate([length-border_width, 0, 0])
-        cube([border_width, width, thickness_eps]);
+        cube([border_width, width, thickness]);
     // short leg
     translate([length-2*border_width, width-border_width_eps, 0])
-        cube([border_width, border_width_eps, thickness_eps]);
+        cube([border_width, border_width_eps, thickness]);
 };
 
-translate([0, 40, 0])
-    spaghetti_U(50, 20, 5, 2, [10, 2.5], [0.5,0.25]);
-spaghetti_L(50, 20, 5, 2, 0.2);
+translate([0, 50, 0])
+    spaghetti_U(80, 30, 7, 3, [10, 2.5], [0.5,0.25]);
+spaghetti_L(80, 30, 7, 2.5, 0.1);
